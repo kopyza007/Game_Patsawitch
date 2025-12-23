@@ -5,24 +5,23 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 
-public class PlayerContrrol : MonoBehaviour
-{
+public class PlayerContrrol : MonoBehaviour 
     // 1. การประกาศการเคลื่อนที่ ของตัว player เราจะอิงค์จากโค้ดที่เรียนมา 
     //------------ การเคลื่อนที่------------
-    public float moveSpeed = 5f;                        // 1.ความเร็วปกติ
-    public float sprintSpeed = 10f;                    //2. ความเร็วเมื่อกด Shift
-    public float jumpForce = 7f;                      //3. ความแรงในการกระโดด(ส่วนนี้ปรับเป็น0)
-    private Rigidbody rb;                            // ตัวแปร Rigidbody
-    private bool isGrounded;                        // เช็คว่าตัวละครอยู่บนพื้นหรือไม่ (นำไปใช้กับการกระโดดได้อีกครั้งเมื่อตัวละครถงพื้น)
+    public float moveSpeed = 5f;                        // ความเร็วปกติ
+    public float sprintSpeed = 10f;                    //ความเร็วเมื่อกด Shift
+    public float jumpForce = 7f;                      //ความแรงในการกระโดด
+    private Rigidbody rb;                            
+    private bool isGrounded;                        // เช็คว่าตัวละครอยู่บนพื้นหรือไม่ (นำไปใช้กับการกระโดดได้อีกครั้งเมื่อตัวละครถองพื้น)
     private float currentSpeed;  
                                  
-    //------------ คูลดาวน์การเร่งความเร็ว (Sprint)-------------
-    public float sprintCooldown = 5f;                // คูลดาวน์ในหน่วยวินาที
-    private float lastSprintTime = -Mathf.Infinity;  // เวลาในการใช้ Sprint ครั้งล่าสุด
+    //------------ คูลดาวน์การเร่งความเร็ว (Sprint)------------
+    public float sprintCooldown = 5f;                // คูลดาวน์
+    private float lastSprintTime = -Mathf.Infinity;  
 
     //------------ เลือด ------------
     public float health = 3f;      // เลือด
-    public Image[] heartImages;   // Array เก็บรูปภาพของ UI Images (หัวใจ)
+    public Image[] heartImages;   
     public Sprite heartFull;     
     public Sprite heartEmpty;
 
@@ -44,10 +43,10 @@ public class PlayerContrrol : MonoBehaviour
 
     private void Update()
     {
-        // ------------เช็คTime เพื่อเป็นคูลดาวให้กับ Player (ปรับให้เป็น 0 ตอนนี้) +++++++++++++++
+        // ------------เช็คTime เพื่อเป็นคูลดาวให้กับ Playern ++++++++++
         float timeSinceLastSprint = Time.time - lastSprintTime;
 
-        // -------------ตรวจสอบการเร่งความเร็วด้วยการกด Shift และคูลดาวน์ ---------------- 
+        // -------------ความเร็วด้วยการกด Shift และคูลดาวน ---------------- 
         if ((Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) && timeSinceLastSprint >= sprintCooldown)
         {
             currentSpeed = sprintSpeed; 
@@ -58,8 +57,8 @@ public class PlayerContrrol : MonoBehaviour
         }
 
         //  --------------การเคลื่อนที่จากปุ่ม W, A, S, D หรือปุ่มลูกศร---------
-        float moveX = Input.GetAxis("Horizontal");  // A, D หรือ Left, Right Arrow  เพื่อให้สามารถเดินซ้าย ขวา ได้ 
-        float moveZ = Input.GetAxis("Vertical");    // W, S หรือ Up, Down Arrow เพื่อให้สามารถหน้าหลังได้ 
+        float moveX = Input.GetAxis("Horizontal");  
+        float moveZ = Input.GetAxis("Vertical");    
 
         //-------------- เคลื่อนที่ตัวละคร --------------
         Vector3 move = transform.right * moveX + transform.forward * moveZ;
@@ -74,7 +73,7 @@ public class PlayerContrrol : MonoBehaviour
         // -------------- ใช้เพื่อเช็คว่่เราไม่ได้กด Shift ตอนไหนเวลาจะเริ่มคูลดาว (ไม่ได้ใข้)
         if (Input.GetKeyUp(KeyCode.LeftShift) || Input.GetKeyUp(KeyCode.RightShift))
         {
-            lastSprintTime = Time.time;  // บันทึกเวลาที่ปล่อย Shift
+            lastSprintTime = Time.time;  
         }
         PlayMovementSound();
     }
@@ -85,7 +84,7 @@ public class PlayerContrrol : MonoBehaviour
         if (currentSpeed == sprintSpeed && audioSource.clip != runSound) // วิ่ง 
         {
             audioSource.clip = runSound;
-            audioSource.Play();  // เล่นเสียงวิ่ง
+            audioSource.Play(); 
             Debug.Log("Playing Run Sound");
         }
         else if (currentSpeed == moveSpeed && audioSource.clip != walkSound)  // เเละ ดิน
@@ -99,7 +98,6 @@ public class PlayerContrrol : MonoBehaviour
     public void TakeDamage(float damage)
     {
         health -= damage;  
-
         if (health <= 0)
         {
             Die();  
@@ -150,3 +148,4 @@ public class PlayerContrrol : MonoBehaviour
         }
     }
 }
+
