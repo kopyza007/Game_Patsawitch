@@ -56,7 +56,8 @@ public class FirstPersoPlayer : MonoBehaviour
             cameraDistance = 1.5f;
         }
 
-        // อัพเดตตำแหน่งกล้องตามระยะห่างใหม่เสมอ 
+       
         transform.localPosition = new Vector3(0f, 1f, -cameraDistance);
     }
 }
+
